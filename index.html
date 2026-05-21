@@ -1,3 +1,96 @@
-<html>
-wedding test
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wedding</title>
+
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="manifest" href="manifest.json"/>
+
+  <meta name="theme-color" content="#ffffff"/>
+</head>
+
+<body>
+  <header class="hero">
+    <h1>We're Getting Married</h1>
+    <p class="sub">Save the date • Details below</p>
+  </header>
+
+  <nav class="nav">
+    <a href="#details">Details</a>
+    <a href="#rsvp">RSVP</a>
+    <a href="#travel">Travel</a>
+    <a href="#photos">Photos</a>
+  </nav>
+
+  <section id="details">
+    <h2>Wedding Details</h2>
+    <p><strong>Date:</strong> Saturday, 00 Month 2026</p>
+    <p><strong>Location:</strong> Ceremony + Reception venue here</p>
+    <div id="map"></div>
+  </section>
+
+  <section id="rsvp">
+    <h2>RSVP</h2>
+
+    <form id="rsvpForm">
+      <input type="text" id="name" placeholder="Name" required />
+      <input type="email" id="email" placeholder="Email" required />
+
+      <select id="attendance">
+        <option value="yes">Attending</option>
+        <option value="no">Not attending</option>
+      </select>
+
+      <textarea id="message" placeholder="Message (optional)"></textarea>
+
+      <button type="submit">Send RSVP</button>
+    </form>
+
+    <p id="rsvpStatus"></p>
+  </section>
+
+  <section id="travel">
+    <h2>Travel & Info</h2>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Accommodation</h3>
+        <p>Recommended hotels nearby...</p>
+      </div>
+
+      <div class="card">
+        <h3>Eat & Drink</h3>
+        <p>Local restaurants and bars...</p>
+      </div>
+
+      <div class="card">
+        <h3>Things to do</h3>
+        <p>Sightseeing, beaches, tours...</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="photos">
+    <h2>Photo Wall</h2>
+
+    <div class="photo-grid" id="photoGrid"></div>
+
+    <input type="file" id="photoUpload" accept="image/*"/>
+  </section>
+
+  <footer>
+    <p>Made with love ❤️</p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
+</body>
 </html>
