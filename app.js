@@ -1,3 +1,21 @@
+
+const CONFIG = {
+  rsvpEndpoint: "https://formspree.io/f/meedawqa",
+
+  venue: {
+    name: "Wedding Venue",
+    lat: -33.9108,
+    lng: 151.2027
+  },
+
+  wedding: {
+    date: "2026-10-10",
+    time: "3:00 PM"
+  },
+
+  contactEmail: "hello@wedding.com"
+};
+
 // RSVP
 document.getElementById("rsvpForm").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -55,12 +73,6 @@ window.addEventListener("load", () => {
 
 // Simple map (Google embed fallback)
 document.getElementById("map").innerHTML = `
-  <iframe
-    width="100%"
-    height="300"
-    style="border:0"
-    loading="lazy"
-    allowfullscreen
-    src="https://www.google.com/maps?q=${CONFIG.venue.lat},${CONFIG.venue.lng}&output=embed">
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2027.0031660466886!2d151.27662948089258!3d-33.89088762855951!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12ad9e9cdaac29%3A0x554f9a56986a76be!2sBondi%20Surf%20Bathers&#39;%20Life%20Saving%20Club!5e0!3m2!1sen!2sau!4v1779335351013!5m2!1sen!2sau" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </iframe>
 `;
