@@ -1,96 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Wedding</title>
-
-  <link rel="stylesheet" href="styles.css"/>
-  <link rel="manifest" href="manifest.json"/>
-
-  <meta name="theme-color" content="#ffffff"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#8f6f5f" />
+  <title>Liz & Michael — Wedding</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
-
 <body>
-  <header class="hero">
-    <h1>We're Getting Married</h1>
-    <p class="sub">Save the date • Details below</p>
+  <header class="site-header">
+    <a class="brand" href="index.html">Liz & Michael</a>
+    <button class="nav-toggle" aria-label="Open menu">☰</button>
+    <nav class="nav">
+      <a href="#welcome">Welcome</a><a href="#schedule">Schedule</a><a href="#venue">Venue</a><a href="#maps">Maps</a><a href="#faqs">FAQs</a><a href="#registry">Registry</a><a href="#contact">Contact</a><a href="#emergency">Emergency</a>
+      <a class="pill" href="rsvp.html">RSVP</a><a href="photo-wall.html">Photo Wall</a><a href="accommodation.html">Accommodation</a><a href="local.html">Local Tips</a>
+    </nav>
   </header>
 
-  <nav class="nav">
-    <a href="#details">Details</a>
-    <a href="#rsvp">RSVP</a>
-    <a href="#travel">Travel</a>
-    <a href="#photos">Photos</a>
-  </nav>
-
-  <section id="details">
-    <h2>Wedding Details</h2>
-    <p><strong>Date:</strong> Saturday, 00 Month 2026</p>
-    <p><strong>Location:</strong> Ceremony + Reception venue here</p>
-    <div id="map"></div>
-  </section>
-
-  <section id="rsvp">
-    <h2>RSVP</h2>
-
-    <form id="rsvpForm">
-      <input type="text" id="name" placeholder="Name" required />
-      <input type="email" id="email" placeholder="Email" required />
-
-      <select id="attendance">
-        <option value="yes">Attending</option>
-        <option value="no">Not attending</option>
-      </select>
-
-      <textarea id="message" placeholder="Message (optional)"></textarea>
-
-      <button type="submit">Send RSVP</button>
-    </form>
-
-    <p id="rsvpStatus"></p>
-  </section>
-
-  <section id="travel">
-    <h2>Travel & Info</h2>
-
-    <div class="grid">
-      <div class="card">
-        <h3>Accommodation</h3>
-        <p>Recommended hotels nearby...</p>
+  <main>
+    <section id="welcome" class="hero section">
+      <div class="hero-card reveal">
+        <p class="eyebrow">Saturday 3 October 2026 · Bondi</p>
+        <h1>Liz & Michael are getting married</h1>
+        <p class="lead">Join us for a relaxed seaside celebration at Bondi Scenic Lounge.</p>
+        <div class="hero-actions"><a class="button" href="rsvp.html">RSVP now</a><a class="button ghost" href="#schedule">View schedule</a></div>
+        <div id="countdown" class="countdown" aria-live="polite"></div>
       </div>
+    </section>
 
-      <div class="card">
-        <h3>Eat & Drink</h3>
-        <p>Local restaurants and bars...</p>
+    <section id="schedule" class="section reveal">
+      <p class="eyebrow">The day</p><h2>Schedule</h2>
+      <div class="timeline">
+        <div><strong>2:30pm</strong><span>Ceremony</span></div>
+        <div><strong>3:30pm</strong><span>Drinks, light pass-arounds and grazing table</span></div>
+        <div><strong>6:00pm</strong><span>Standing buffet dinner</span></div>
+        <div><strong>7:30pm</strong><span>Dessert</span></div>
+        <div><strong>8:00pm</strong><span>Formal venue bump-out timing</span></div>
       </div>
+    </section>
 
-      <div class="card">
-        <h3>Things to do</h3>
-        <p>Sightseeing, beaches, tours...</p>
+    <section id="venue" class="section split reveal">
+      <div><p class="eyebrow">Venue</p><h2>Bondi Scenic Lounge</h2><p>Bondi RSL, with parking available for loading and unloading. Ceremony and reception details will be updated here as the day gets closer.</p></div>
+      <div class="info-card"><h3>Good to know</h3><p>Cutlery and plates are provided by the venue. Bar and glassies arranged by venue.</p></div>
+    </section>
+
+    <section id="maps" class="section reveal">
+      <p class="eyebrow">Getting there</p><h2>Maps</h2>
+      <div class="map-card"><iframe title="Bondi map" loading="lazy" src="https://www.google.com/maps?q=Bondi%20RSL%20Bondi%20NSW&output=embed"></iframe></div>
+    </section>
+
+    <section id="faqs" class="section reveal">
+      <p class="eyebrow">Questions</p><h2>FAQs</h2>
+      <div class="grid cards">
+        <article><h3>Kids?</h3><p>Yes, children are welcome. We’ll add any kid-friendly timing notes closer to the date.</p></article>
+        <article><h3>Dress code?</h3><p>Smart, relaxed wedding attire. Think seaside celebration, not black tie.</p></article>
+        <article><h3>Parking?</h3><p>Parking/loading details will be confirmed with the venue and added here.</p></article>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="photos">
-    <h2>Photo Wall</h2>
+    <section id="registry" class="section reveal">
+      <p class="eyebrow">Gifts</p><h2>Registry</h2><p>Your presence is the main thing. Registry or wishing-well details can be linked here.</p>
+    </section>
 
-    <div class="photo-grid" id="photoGrid"></div>
+    <section id="contact" class="section reveal"><p class="eyebrow">Need help?</p><h2>Contact</h2><p>For RSVP or day-of questions, contact Liz or Michael. Add phone/email details here.</p></section>
+    <section id="emergency" class="section reveal"><p class="eyebrow">Day-of</p><h2>Emergency info</h2><p>Emergency contact numbers, venue contact and medical notes can live here for guests.</p></section>
+  </main>
 
-    <input type="file" id="photoUpload" accept="image/*"/>
-  </section>
-
-  <footer>
-    <p>Made with love ❤️</p>
-  </footer>
-
-  <script src="config.js"></script>
-  <script src="app.js"></script>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js');
-    }
-  </script>
+  <footer><p>Liz & Michael · 3 October 2026</p></footer>
+  <script src="js/app.js"></script>
 </body>
 </html>
