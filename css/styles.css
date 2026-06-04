@@ -68,3 +68,114 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* PWA install prompt */
+.install-strip {
+  position: fixed;
+  left: 50%;
+  bottom: 1rem;
+  z-index: 40;
+  width: min(920px, calc(100% - 2rem));
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .9rem 1rem;
+  background: rgba(255, 253, 251, .96);
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.install-strip[hidden],
+.install-modal[hidden] {
+  display: none !important;
+}
+
+.install-strip strong,
+.install-strip span {
+  display: block;
+}
+
+.install-strip span {
+  color: var(--muted);
+  font-size: .92rem;
+  margin-top: .1rem;
+}
+
+.install-button {
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 800;
+  padding: .85rem 1.1rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.install-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(48, 37, 31, .42);
+  backdrop-filter: blur(8px);
+}
+
+.install-modal-card {
+  position: relative;
+  width: min(620px, 100%);
+  max-height: min(88vh, 760px);
+  overflow: auto;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 1.75rem;
+  box-shadow: var(--shadow);
+  padding: clamp(1.25rem, 4vw, 2rem);
+}
+
+.install-modal-card h2 {
+  margin-bottom: .25rem;
+}
+
+.modal-close {
+  position: absolute;
+  top: .85rem;
+  right: .85rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff8f3;
+  color: var(--ink);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.install-gif {
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+  border-radius: 1.25rem;
+  border: 1px solid var(--line);
+  background: #fff8f3;
+}
+
+@media (max-width: 640px) {
+  .install-strip {
+    align-items: stretch;
+    flex-direction: column;
+    bottom: .75rem;
+  }
+
+  .install-button {
+    width: 100%;
+  }
+}
