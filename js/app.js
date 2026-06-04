@@ -82,3 +82,92 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
+
+
+// PWA install button
+// Android/Chrome supports the native beforeinstallprompt event.
+// iOS Safari does not, so we show a friendly animated guide instead.
+let deferredInstallPrompt = null;
+
+const installStrip = document.getElementById('install-strip');
+const installButton = document.getElementById('install-button');
+const iosInstallModal = document.getElementById('ios-install-modal');
+const iosInstallClose = document.getElementById('ios-install-close');
+
+function isIosDevice() {
+  return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+}
+
+function isStandaloneApp() {
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+
+function showInstallStrip(label = 'Install app') {
+  if (!installStrip || !installButton || isStandaloneApp()) return;
+  installButton.textContent = label;
+  installStrip.hidden = false;
+}
+
+function hideInstallStrip() {
+  if (!installStrip) return;
+  installStrip.hidden = true;
+}
+
+function openIosInstallGuide() {
+  if (!iosInstallModal) return;
+  iosInstallModal.hidden = false;
+  iosInstallModal.setAttribute('aria-hidden', 'false');
+}
+
+function closeIosInstallGuide() {
+  if (!iosInstallModal) return;
+  iosInstallModal.hidden = true;
+  iosInstallModal.setAttribute('aria-hidden', 'true');
+}
+
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  showInstallStrip('Install app');
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredInstallPrompt = null;
+  hideInstallStrip();
+});
+
+if (installButton) {
+  installButton.addEventListener('click', async () => {
+    if (deferredInstallPrompt) {
+      deferredInstallPrompt.prompt();
+      await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      hideInstallStrip();
+      return;
+    }
+
+    if (isIosDevice()) {
+      openIosInstallGuide();
+    }
+  });
+}
+
+if (iosInstallClose) {
+  iosInstallClose.addEventListener('click', closeIosInstallGuide);
+}
+
+if (iosInstallModal) {
+  iosInstallModal.addEventListener('click', (event) => {
+    if (event.target === iosInstallModal) closeIosInstallGuide();
+  });
+}
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeIosInstallGuide();
+});
+
+window.addEventListener('load', () => {
+  if (isIosDevice() && !isStandaloneApp()) {
+    showInstallStrip('How to install');
+  }
+});
