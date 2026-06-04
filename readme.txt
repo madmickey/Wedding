@@ -1,0 +1,13 @@
+/wedding
+  index.html
+  styles.css
+  app.js
+  manifest.json
+  service-worker.js
+  events.json
+  guests.json
+  CNAME
+  /assets
+    hero.jpg
+    icon-192.png
+    icon-512.png
