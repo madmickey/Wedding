@@ -45,25 +45,27 @@ const numAdults  = params.get("num_adults")  || localStorage.getItem("num_adults
     const greeting = document.getElementById("guestGreeting");
 
     if (guestNames) {
-        greeting.innerHTML = `
-            <div class="info-card" style="margin-bottom:2rem;">
-                <p class="eyebrow">RSVP For</p>
-                <h2>${guestNames}</h2>
-            </div>
+    greeting.innerHTML = `
+        <div class="info-card" style="margin-bottom:1.5rem;">
+            <p class="eyebrow">RSVP For</p>
+            <h2>${guestNames}</h2>
+        </div>
 
-			<section class="card">
+        <div class="card" style="margin-bottom:2rem;">
+            <p class="eyebrow">Wedding Details</p>
+            <p>
+                💍 <strong>Michael & Liz's Wedding</strong><br>
+                📅 Saturday 3 October 2026 · 2:00pm<br>
+                📍 Bondi Scenic Lounge @ Bondi Surf Life Saving Club
+            </p>
+            <p style="margin-top:1rem;">
+                Please confirm your attendance and update any guest details below.
+            </p>
+        </div>
+    `;
+}
   
-  <p>Please confirm your attendance for:</p>
-
-  <p>
-    💍 <strong>Michael & Liz's Wedding</strong><br>
-    📅 Saturday 3 October 2026 · 2:00pm<br>
-    📍 Bondi Scenic Lounge, Bondi Surf Life Saving Club
-  </p>
-</section>
-        `;
-    }
-
+  
     const tallyUrl =
         "https://tally.so/embed/Gx7Q4Z" +
         "?alignLeft=1" +
