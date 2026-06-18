@@ -30,16 +30,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const params = new URLSearchParams(window.location.search);
 
-    const guestCode = params.get("guest_code") || "";
-	
-	
-	if (guestCode) {
-		localStorage.setItem("guest_code", guestCode);
-	}
-    const guestNames = params.get("guest_names") || "";
-    const numKids = params.get("num_kids") || "";
-    const numAdults = params.get("num_adults") || "";
+["guest_code", "guest_names", "num_kids", "num_adults"].forEach(key => {
+    const value = params.get(key);
+    if (value) {
+        localStorage.setItem(key, value);
+    }
+});
 
+const guestCode  = params.get("guest_code")  || localStorage.getItem("guest_code")  || "";
+const guestNames = params.get("guest_names") || localStorage.getItem("guest_names") || "";
+const numKids    = params.get("num_kids")    || localStorage.getItem("num_kids")    || "";
+const numAdults  = params.get("num_adults")  || localStorage.getItem("num_adults")  || "";
+	
     const greeting = document.getElementById("guestGreeting");
 
     if (guestNames) {
@@ -48,6 +50,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 <p class="eyebrow">RSVP For</p>
                 <h2>${guestNames}</h2>
             </div>
+
+			<section class="card">
+  
+  <p>Please confirm your attendance for:</p>
+
+  <p>
+    💍 <strong>Michael & Liz's Wedding</strong><br>
+    📅 Saturday 3 October 2026 · 2:00pm<br>
+    📍 Bondi Scenic Lounge, Bondi Surf Life Saving Club
+  </p>
+</section>
         `;
     }
 
