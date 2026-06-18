@@ -31,6 +31,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const params = new URLSearchParams(window.location.search);
 
     const guestCode = params.get("guest_code") || "";
+	
+	
+	if (guestCode) {
+		localStorage.setItem("guest_code", guestCode);
+	}
     const guestNames = params.get("guest_names") || "";
     const numKids = params.get("num_kids") || "";
     const numAdults = params.get("num_adults") || "";

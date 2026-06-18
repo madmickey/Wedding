@@ -15,14 +15,11 @@
   <header class="site-header">
     <a class="brand" href="index.html">Liz & Michael</a>
 
-    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-navigation">
-      ☰
-    </button>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-navigation">☰</button>
 
     <nav id="site-navigation" class="nav">
       <a href="index.html">Home</a>
       <a href="rsvp.html">RSVP</a>
-      <a href="photo-wall.html" class="pill">Photo Wall</a>
       <a href="accommodation.html">Accommodation</a>
       <a href="local.html">Local Tips</a>
     </nav>
@@ -34,15 +31,16 @@
       <h1>Share your favourite photos</h1>
 
       <p class="lead">
-        Upload your favourite photos from the day. Add a short caption if you like.
+        Upload your photos below and they’ll come through to us via Tally.
       </p>
 
       <iframe
-        id="photoTallyFrame"
+        src="https://tally.so/embed//pbZjaZ?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
         width="100%"
-        height="1000"
+        height="900"
         frameborder="0"
-        loading="lazy"
+        marginheight="0"
+        marginwidth="0"
         title="Upload wedding photos"
         style="border:none;">
       </iframe>
@@ -50,18 +48,18 @@
 
     <section class="section grid cards reveal">
       <article>
-        <h3>📸 Upload a few favourites</h3>
-        <p>Pick your best shots rather than uploading hundreds at once.</p>
+        <h3>How it works</h3>
+        <p>Add your name, upload your favourite photo or photos, and hit submit.</p>
       </article>
 
       <article>
-        <h3>💬 Add a caption</h3>
-        <p>Tell us who is in the photo or what was happening.</p>
+        <h3>Where uploads go</h3>
+        <p>Photos are collected through Tally so we can review and save them after the wedding.</p>
       </article>
 
       <article>
-        <h3>💛 Thank you</h3>
-        <p>We’ll collect the photos and save them after the wedding.</p>
+        <h3>Tip</h3>
+        <p>Choose your best few photos rather than uploading hundreds at once.</p>
       </article>
     </section>
   </main>
@@ -83,22 +81,6 @@
       <img class="install-gif" src="assets/images/ios-add-to-home.gif" alt="Animated guide showing how to add this wedding site to the iPhone home screen">
     </div>
   </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const guestCode = localStorage.getItem("guest_code") || "";
-
-      const tallyUrl =
-        "https://tally.so/embed/pbZjaZ" +
-        "?alignLeft=1" +
-        "&hideTitle=1" +
-        "&transparentBackground=1" +
-        "&dynamicHeight=1" +
-        "&guest_code=" + encodeURIComponent(guestCode);
-
-      document.getElementById("photoTallyFrame").src = tallyUrl;
-    });
-  </script>
 
   <script src="js/app.js"></script>
 </body>
