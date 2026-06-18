@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#8f6f5f" />
-  <title>Liz & Michael — Wedding</title>
+  <title>Liz + Michael — Wedding</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
   <link rel="stylesheet" href="css/styles.css" />
@@ -22,15 +22,17 @@
   <main>
     <section id="welcome" class="hero section">
       <div class="hero-card reveal">
-        <p class="eyebrow">Saturday 3 October 2026 · Bondi</p>
-        <h1>Liz & Michael are getting married!</h1>
-        <p class="lead">Join us for a relaxed seaside celebration at Bondi Scenic Lounge.</p>
+        <p class="eyebrow-raised">Saturday 3 October 2026 · 2pm</p>
+		
+        <h1>Liz + Michael's wedding!</h1>
+        <p class="lead">Join us for a relaxed seaside celebration</p>
         <div class="hero-actions"><a class="button" href="rsvp.html">RSVP now</a><a class="button ghost" href="#schedule">View schedule</a></div>
         <div id="countdown" class="countdown" aria-live="polite"></div>
+		<p class="eyebrow-raised">Bondi Scenic Lounge @ Bondi Surf life saving club</p>
       </div>
     </section>
 
-    <section id="schedule" class="section reveal">
+<!--<section id="schedule" class="section reveal">
       <p class="eyebrow">The day</p><h2>Schedule</h2>
       <div class="timeline">
         <div><strong>2:30pm</strong><span>Ceremony</span></div>
@@ -39,19 +41,56 @@
         <div><strong>7:30pm</strong><span>Dessert</span></div>
         <div><strong>8:00pm</strong><span>Formal venue bump-out timing</span></div>
       </div>
+    </section>-->
+    <section id="schedule" class="section reveal">
+      <p class="eyebrow">The day</p><h2>Schedule</h2>
+      <div class="timeline">
+        <div><strong>2:00pm</strong><span>Arrival</span></div>
+        <div><strong>2:30pm</strong><span>Ceremony</span></div>
+        <div><strong>in between</strong><span>to be confirmed</span></div>
+        <div><strong>8:00pm</strong><span>Early finish</span></div>
+      </div>
     </section>
 
     <section id="venue" class="section split reveal">
       <div><p class="eyebrow">Venue</p><h2>Bondi Scenic Lounge</h2><p>Bondi Surf life saving club, next to the Bondi Pavilion </p></div>
       <div class="info-card"><h3>Good to know</h3><p>Entrance to upstairs is opposite the kids play ground. 
-      Note that it is not the North Bondi surf club or RSL</p></div>
+      Note: it is not the North Bondi surf club or RSL!</p></div>
       
     </section>
 
     <section id="maps" class="section reveal">
-      <p class="eyebrow">Getting there</p><h2>Maps</h2>
-      <div class="map-card"><iframe title="Bondi map" loading="lazy" src="https://maps.app.goo.gl/CQeandZKSm8R3vXT8?g_st=ac&output=embed"></iframe></div>
-    </section>
+	  <p class="eyebrow">Getting there</p>
+	  <h2>Maps</h2>
+
+	  <div class="map-card">
+
+		<iframe
+		  title="Bondi Surf Bathers Life Saving Club Map"
+		  loading="lazy"
+		  referrerpolicy="no-referrer-when-downgrade"
+		  src="https://www.google.com/maps?q=Bondi+Surf+Bathers+Life+Saving+Club+Bondi+NSW&output=embed">
+		</iframe>
+
+		<div class="map-actions">
+		  <a
+			class="button"
+			href="https://maps.google.com/?q=Bondi+Surf+Bathers+Life+Saving+Club"
+			target="_blank"
+			rel="noopener">
+			Open in Google Maps
+		  </a>
+
+		  <a
+			class="button ghost"
+			href="https://www.google.com/maps/dir/?api=1&destination=Bondi+Surf+Bathers+Life+Saving+Club"
+			target="_blank"
+			rel="noopener">
+			Get Directions
+		  </a>
+		</div>
+	  </div>
+	</section>
 
     <section id="faqs" class="section reveal">
       <p class="eyebrow">Questions</p><h2>FAQs</h2>
@@ -62,27 +101,125 @@
       </div>
     </section>
 
+
+<!--
     <section id="registry" class="section reveal">
       <p class="eyebrow">Gifts</p><h2>Registry</h2><p>Your presence is the main thing. Wishing-well tbc</p>
     </section>
+	-->
 
-    <section id="contact" class="section reveal"><p class="eyebrow">Need help?</p><h2>Contact</h2><p>For RSVP or day-of questions, contact <a href="tel:+61424619499">Liz</a> <a href="https://wa.me/0401348602">Michael whatsapp</a>Michael. tbc can we ask someone to he a contact person. Add phone/email details here.</p>
+    <section id="contact" class="section reveal"><p class="eyebrow">Need help?</p><h2>Contact</h2><p>For RSVP or day-of questions, contact 
+	
+	<div class="grid cards">
+       <article><h3>Group info</h3><p>
+<a href="https://chat.whatsapp.com/DlBkA845jLG3YuXOPNsFch?s=cl&p=a&ilr=2" class="contact-link" target="_blank">
+    <span class="icon">💬</span>
+    <span>WhatsApp group chat</span>
+</a>
+
+<a href="mailto:wedding@example.com" class="contact-link">
+    <span class="icon">✉️</span>
+    <span>Email us</span>
+</a>
+   
+	   </p></article>
+	   <article><h3>Michael</h3><p>
+<a href="https://wa.me/61412345678" class="contact-link" target="_blank">
+    <span class="icon">💬</span>
+    <span>WhatsApp Michael</span>
+</a>
+
+<a href="mailto:wedding@example.com" class="contact-link">
+    <span class="icon">✉️</span>
+    <span>Email Michael</span>
+</a>
+
+<a href="tel:+61412345678" class="contact-link">
+    <span class="icon">📞</span>
+    <span>Call Michael</span>
+</a>
+	  </article>
+	   
+	   <article><h3>Liz</h3><p>
+<a href="https://wa.me/61412345678" class="contact-link" target="_blank">
+    <span class="icon">💬</span>
+    <span>WhatsApp Liz</span>
+</a>
+
+<a href="mailto:wedding@example.com" class="contact-link">
+    <span class="icon">✉️</span>
+    <span>Email Liz</span>
+</a>
+
+<a href="tel:+61412345678" class="contact-link">
+    <span class="icon">📞</span>
+    <span>Call Liz</span>
+</a>
+	   
+	   
+	   </p></article>
     
-    https://chat.whatsapp.com/DlBkA845jLG3YuXOPNsFch?s=cl&p=a&ilr=2
     </section>
-    <section id="emergency" class="section reveal"><p class="eyebrow">Day-of</p><h2>Emergency info</h2><p>Emergency contact numbers</p>
-<div class="grid cards">
-<ul>
-  <li><strong>Emergency (Police, Fire, Ambulance):</strong> 000</li>
-  <li><strong>Emergency from mobile (backup):</strong> 112</li>
-  <li><strong>Police Assistance Line (non-urgent):</strong> 131 444</li>
-  <li><strong>Healthdirect 24/7 nurse advice:</strong> 1800 022 222</li>
-  <li><strong>Poisons Information:</strong> 13 11 26</li>
-  <li><strong>State Emergency Service (storms/floods):</strong> 132 500</li>
-  <li><strong>Lifeline crisis support:</strong> 13 11 14</li>
-</ul>
-</div>
-    </section>
+   <section id="emergency" class="section reveal">
+    <p class="eyebrow">Need Help?</p>
+    <h2>Important Contacts</h2>
+
+    <p class="lead">
+        Useful Australian emergency and support numbers.
+    </p>
+
+    <div class="grid cards">
+
+        <article>
+            <h3>🚨 Emergency</h3>
+            <p>
+                <a href="tel:000"><strong>000</strong></a>
+            </p>
+            <p>Police, Fire & Ambulance</p>
+        </article>
+
+        <article>
+            <h3>📱 Mobile Backup</h3>
+            <p>
+                <a href="tel:112"><strong>112</strong></a>
+            </p>
+            <p>Emergency calls from mobile phones</p>
+        </article>
+
+        <article>
+            <h3>👮 Police Assistance</h3>
+            <p>
+                <a href="tel:+61131444"><strong>+61 131 444</strong></a>
+            </p>
+            <p>Non-urgent police matters</p>
+        </article>
+
+        <article>
+            <h3>🏥 Healthdirect</h3>
+            <p>
+                <a href="tel:+611800022222"><strong>+61 1800 022 222</strong></a>
+            </p>
+            <p>24-hour nurse and health advice</p>
+        </article>
+
+        <article>
+            <h3>☠️ Poisons</h3>
+            <p>
+                <a href="tel:+61131126"><strong>+61 13 11 26</strong></a>
+            </p>
+            <p>Poisons Information Centre</p>
+        </article>
+
+        <article>
+            <h3>⛈️ SES</h3>
+            <p>
+                <a href="tel:+61132500"><strong>+61 132 500</strong></a>
+            </p>
+            <p>Storm and flood assistance</p>
+        </article>
+
+    </div>
+</section>
   </main>
 
 
