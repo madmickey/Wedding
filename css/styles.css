@@ -425,14 +425,18 @@ footer {
     z-index: 40;
     width: min(920px, calc(100% - 2rem));
     transform: translateX(-50%);
+
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+
     padding: 0.9rem 1rem;
+
     background: rgba(255, 253, 251, 0.96);
     border: 1px solid var(--line);
     border-radius: 1.25rem;
+
     box-shadow: var(--shadow);
     backdrop-filter: blur(18px);
 }
@@ -447,43 +451,88 @@ footer {
     display: block;
 }
 
+.install-strip strong {
+    color: #7f5648;
+}
+
 .install-strip span {
     color: var(--muted);
     font-size: 0.92rem;
     margin-top: 0.1rem;
 }
 
+.install-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .install-button {
     border: 0;
     border-radius: 999px;
-    background: var(--ink);
+
+    background: #8c6453;
     color: #fff;
-    font-weight: 800;
+
+    font-weight: 700;
     padding: 0.85rem 1.1rem;
+
     white-space: nowrap;
     cursor: pointer;
+}
+
+.install-button:hover {
+    background: #7f5648;
+}
+
+.install-dismiss {
+    width: 2.5rem;
+    height: 2.5rem;
+
+    border: 1px solid var(--line);
+    border-radius: 999px;
+
+    background: transparent;
+    color: var(--muted);
+
+    font-size: 1.2rem;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.install-dismiss:hover {
+    background: rgba(143, 111, 95, 0.08);
+    color: var(--ink);
 }
 
 .install-modal {
     position: fixed;
     inset: 0;
     z-index: 50;
+
     display: grid;
     place-items: center;
+
     padding: 1rem;
+
     background: rgba(48, 37, 31, 0.42);
     backdrop-filter: blur(8px);
 }
 
 .install-modal-card {
     position: relative;
+
     width: min(620px, 100%);
     max-height: min(88vh, 760px);
     overflow: auto;
+
     background: var(--paper);
     border: 1px solid var(--line);
     border-radius: 1.75rem;
+
     box-shadow: var(--shadow);
+
     padding: clamp(1.25rem, 4vw, 2rem);
 }
 
@@ -495,38 +544,49 @@ footer {
     position: absolute;
     top: 0.85rem;
     right: 0.85rem;
+
     width: 2.5rem;
     height: 2.5rem;
+
     border-radius: 999px;
     border: 1px solid var(--line);
+
     background: #fff8f3;
     color: var(--ink);
+
     font-size: 1.5rem;
     line-height: 1;
+
     cursor: pointer;
 }
 
 .install-gif {
     display: block;
     width: 100%;
+
     margin-top: 1rem;
+
     border-radius: 1.25rem;
     border: 1px solid var(--line);
+
     background: #fff8f3;
 }
 
 @media (max-width: 640px) {
     .install-strip {
-        align-items: stretch;
         flex-direction: column;
+        align-items: stretch;
         bottom: 0.75rem;
     }
 
-    .install-button {
+    .install-actions {
         width: 100%;
     }
-}
 
+    .install-button {
+        flex: 1;
+    }
+}
 
 
 

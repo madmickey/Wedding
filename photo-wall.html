@@ -66,23 +66,73 @@
     </section>
   </main>
 
-  <div class="install-strip" id="install-strip" hidden>
-    <div>
-      <strong>Save this wedding site</strong>
-      <span>Install it to your home screen for quick offline access.</span>
-    </div>
-    <button class="install-button" id="install-button" type="button">Install app</button>
+<div class="install-strip" id="install-strip" hidden>
+  <div>
+    <strong>Add our wedding app</strong>
+    <span>
+      Get quick access to schedules, maps, accommodation and photo sharing.
+    </span>
   </div>
 
-  <div class="install-modal" id="ios-install-modal" hidden aria-hidden="true">
-    <div class="install-modal-card" role="dialog" aria-modal="true" aria-labelledby="ios-install-title">
-      <button class="modal-close" id="ios-install-close" type="button" aria-label="Close install instructions">×</button>
-      <p class="eyebrow">iPhone / iPad</p>
-      <h2 id="ios-install-title">Add to Home Screen</h2>
-      <p>On iOS, install from Safari using Share, then <strong>Add to Home Screen</strong>.</p>
-      <img class="install-gif" src="assets/images/ios-add-to-home.gif" alt="Animated guide showing how to add this wedding site to the iPhone home screen">
-    </div>
+  <div class="install-actions">
+    <button
+      class="install-button"
+      id="install-button"
+      type="button">
+      Add to Home Screen
+    </button>
+
+    <button
+      class="install-dismiss"
+      id="install-dismiss"
+      type="button"
+      aria-label="Dismiss install prompt">
+      ×
+    </button>
   </div>
+</div>
+
+<div
+  class="install-modal"
+  id="ios-install-modal"
+  hidden
+  aria-hidden="true">
+
+  <div
+    class="install-modal-card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="ios-install-title">
+
+    <button
+      class="modal-close"
+      id="ios-install-close"
+      type="button"
+      aria-label="Close install instructions">
+      ×
+    </button>
+
+    <p class="eyebrow">iPhone & iPad</p>
+
+    <h2 id="ios-install-title">
+      Add to Home Screen
+    </h2>
+
+    <p>
+      Add our wedding app to your Home Screen for easy access before and during the day.
+    </p>
+
+    <p>
+      Tap <strong>Share</strong> in Safari, then select
+      <strong>Add to Home Screen</strong>.
+    </p>
+
+    <img
+      class="install-gif"
+      src="assets/images/ios-add-to-home.gif"
+      alt="How to add the wedding site to your iPhone home screen">
+  </div>
+</div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
