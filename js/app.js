@@ -43,22 +43,50 @@ const countdown = document.getElementById('countdown');
 function updateCountdown() {
   if (!countdown) return;
 
-  const millisecondsUntilWedding = weddingDate - new Date();
+  const now = new Date();
 
-  if (millisecondsUntilWedding <= 0) {
-    countdown.textContent = 'Today is the day!';
+  if (now >= weddingDate) {
+    countdown.textContent = "We're married!";
     return;
   }
 
-  const days = Math.floor(millisecondsUntilWedding / 86_400_000);
-  const hours = Math.floor(millisecondsUntilWedding / 3_600_000) % 24;
-  const minutes = Math.floor(millisecondsUntilWedding / 60_000) % 60;
+  const millisecondsRemaining = weddingDate - now;
+  const daysRemaining = Math.floor(millisecondsRemaining / 86_400_000);
 
-  countdown.textContent = `${days} days · ${hours} hours · ${minutes} minutes to go`;
+  // Last 4 weeks
+  if (daysRemaining <= 28) {
+
+    if (daysRemaining === 0) {
+      countdown.textContent = "Today's the day!";
+      return;
+    }
+
+    const weeks = Math.floor(daysRemaining / 7);
+    const days = daysRemaining % 7;
+
+    if (weeks > 0) {
+      countdown.textContent =
+        `${weeks} week${weeks === 1 ? '' : 's'}, ${days} day${days === 1 ? '' : 's'} to go!`;
+    } else {
+      countdown.textContent =
+        `${days} day${days === 1 ? '' : 's'} to go!`;
+    }
+
+    return;
+  }
+
+  // More than 4 weeks away
+  const monthsRemaining =
+    (weddingDate.getFullYear() - now.getFullYear()) * 12 +
+    (weddingDate.getMonth() - now.getMonth());
+
+  countdown.textContent =
+    `${monthsRemaining} month${monthsRemaining === 1 ? '' : 's'} to go`;
 }
 
 updateCountdown();
-setInterval(updateCountdown, 60_000);
+setInterval(updateCountdown, 60 * 60 * 1000);
+
 
 const revealObserver = new IntersectionObserver(
   (entries) => {
