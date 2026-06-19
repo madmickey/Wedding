@@ -565,7 +565,7 @@ footer {
 
   background-image: url("../assets/images/liz-michael-crest.png");
   background-repeat: no-repeat;
-  background-position: center 25px;
+  background-position: center 45px;
   background-size: min(320px, 75vw);
 
   opacity: 0.54;
@@ -586,8 +586,8 @@ footer {
 
 /* Main heading */
 .hero-card h1 {
-  margin-top: 12rem;
-  margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 12rem;
   color: #7f5648;
   letter-spacing: -0.03em;
   text-shadow: 0 2px 18px rgba(143,111,95,0.15);
