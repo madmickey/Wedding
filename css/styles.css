@@ -527,3 +527,10 @@ footer {
         justify-content: center;
     }
 }
+
+.wedding-crest {
+  display: block;
+  width: min(260px, 70vw);
+  max-width: 260px;
+  margin: 0 auto 1.5rem;
+}
