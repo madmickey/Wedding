@@ -1,12 +1,15 @@
 :root {
-    --bg: #fbf6f1;
-    --paper: #fffdfb;
-    --ink: #30251f;
-    --muted: #7d6b61;
-    --accent: #8f6f5f;
-    --accent2: #d9b8a5;
-    --line: #eaded5;
-    --shadow: 0 20px 60px rgba(48, 37, 31, 0.12);
+:root {
+    --bg: #f8f1ea;
+    --paper: #fffaf6;
+    --ink: #34251f;
+    --muted: #7a6256;
+    --accent: #9a6f5d;
+    --accent2: #e2bda8;
+    --line: #ead7ca;
+    --rose: #b98678;
+    --champagne: #f3dfcf;
+    --shadow: 0 20px 60px rgba(52, 37, 31, 0.13);
 }
 * {
     box-sizing: border-box;
@@ -96,14 +99,30 @@ h2,
 h3 {
     font-family: Georgia, serif;
     line-height: 1.05;
+    color: var(--ink);
 }
+
 h1 {
     font-size: clamp(2.6rem, 8vw, 6.5rem);
     margin: 0.2em 0;
+    color: #6f4d42;
+    text-shadow: 0 2px 18px rgba(143, 111, 95, 0.16);
 }
+
 h2 {
     font-size: clamp(2rem, 5vw, 3.5rem);
     margin: 0.2em 0 0.5em;
+    color: #8f5f50;
+    position: relative;
+}
+
+h2::after {
+    content: "";
+    display: block;
+    width: 4.5rem;
+    height: 2px;
+    margin-top: 0.6rem;
+    background: linear-gradient(90deg, var(--rose), transparent);
 }
 .lead {
     font-size: 1.25rem;
@@ -583,4 +602,24 @@ footer {
   margin-top: 2rem;
   padding-top: 1.5rem;
   border-top: 1px solid rgba(143, 111, 95, 0.15);
+}
+
+    .hero-card h1 {
+    margin-top: 14rem;
+    color: #7f5648;
+    letter-spacing: -0.03em;
+}
+
+.hero-card h1::after {
+    content: "";
+    display: block;
+    width: 5.5rem;
+    height: 2px;
+    margin: 1rem auto 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--rose),
+        transparent
+    );
 }
