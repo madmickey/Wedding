@@ -553,7 +553,7 @@ footer {
   background-position: center 25px;
   background-size: min(320px, 75vw);
 
-  opacity: 0.14;
+  opacity: 0.34;
 
   filter:
     sepia(0.2)
