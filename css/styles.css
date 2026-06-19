@@ -545,14 +545,12 @@ footer {
         justify-content: center;
     }
 }
-
 .wedding-crest {
   display: block;
   width: min(260px, 70vw);
   max-width: 260px;
   margin: 0 auto 1.5rem;
 }
-
 
 .hero-card {
   position: relative;
@@ -562,7 +560,6 @@ footer {
 
 .hero-card::before {
   content: "";
-
   position: absolute;
   inset: 0;
 
@@ -587,61 +584,65 @@ footer {
   z-index: 1;
 }
 
+/* Main heading */
 .hero-card h1 {
-  margin-top: 14rem;
+  margin-top: 12rem;
+  margin-bottom: 1rem;
+  color: #7f5648;
+  letter-spacing: -0.03em;
+  text-shadow: 0 2px 18px rgba(143,111,95,0.15);
 }
 
+.hero-card h1::after {
+  content: "";
+  display: block;
+  width: 5.5rem;
+  height: 2px;
+  margin: 1rem auto 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--rose),
+    transparent
+  );
+}
+
+/* Date */
+.hero-date {
+  margin: 0;
+  font-size: 1.35rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* Venue title */
+.hero-kicker {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  color: #9a6f5d;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Venue details */
 .venue-line {
-  margin: 1rem 0 0;
+  margin: 0.75rem 0 0;
   font-size: 0.95rem;
   color: var(--muted);
 }
 
+/* Countdown */
+.countdown-lower {
+  margin-top: 2rem;
+  margin-bottom: 0;
+  font-size: 1.05rem;
+  color: var(--accent);
+}
+
+/* Buttons */
 .hero-actions-lower {
   margin-top: 2rem;
   padding-top: 1.5rem;
   border-top: 1px solid rgba(143, 111, 95, 0.15);
-}
-
-    .hero-card h1 {
-    margin-top: 14rem;
-    color: #7f5648;
-    letter-spacing: -0.03em;
-}
-
-.hero-card h1::after {
-    content: "";
-    display: block;
-    width: 5.5rem;
-    height: 2px;
-    margin: 1rem auto 0;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        var(--rose),
-        transparent
-    );
-}
-
-
-.hero-kicker {
-  margin-bottom: 1rem;
-  color: #9a6f5d;
-  font-size: clamp(1rem, 2.5vw, 1.35rem);
-}
-
-.hero-time {
-  margin-top: 0.75rem;
-  margin-bottom: 0.4rem;
-  color: var(--muted);
-}
-
-.countdown-lower {
-  margin-top: 2.5rem;
-  margin-bottom: 0;
-  font-size: 1.05rem;
-}
-
-.hero-actions-lower {
-  margin-top: 1.8rem;
 }
