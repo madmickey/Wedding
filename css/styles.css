@@ -431,7 +431,7 @@ footer {
     justify-content: space-between;
     gap: 1rem;
 
-    padding: 0.9rem 1rem;
+    padding: 0.9rem 3rem 0.9rem 1rem;
 
     background: rgba(255, 253, 251, 0.96);
     border: 1px solid var(--line);
@@ -486,18 +486,16 @@ footer {
 }
 
 .install-dismiss {
-    width: 2.5rem;
-    height: 2.5rem;
-
-    border: 1px solid var(--line);
-    border-radius: 999px;
-
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    border: 0;
     background: transparent;
     color: var(--muted);
-
     font-size: 1.2rem;
     line-height: 1;
-
     cursor: pointer;
 }
 
