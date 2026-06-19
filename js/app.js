@@ -43,22 +43,50 @@ const countdown = document.getElementById('countdown');
 function updateCountdown() {
   if (!countdown) return;
 
-  const millisecondsUntilWedding = weddingDate - new Date();
+  const now = new Date();
 
-  if (millisecondsUntilWedding <= 0) {
-    countdown.textContent = 'Today is the day!';
+  if (now >= weddingDate) {
+    countdown.textContent = "We're married!";
     return;
   }
 
-  const days = Math.floor(millisecondsUntilWedding / 86_400_000);
-  const hours = Math.floor(millisecondsUntilWedding / 3_600_000) % 24;
-  const minutes = Math.floor(millisecondsUntilWedding / 60_000) % 60;
+  const millisecondsRemaining = weddingDate - now;
+  const daysRemaining = Math.floor(millisecondsRemaining / 86_400_000);
 
-  countdown.textContent = `${days} days · ${hours} hours · ${minutes} minutes to go`;
+  // Last 4 weeks
+  if (daysRemaining <= 28) {
+
+    if (daysRemaining === 0) {
+      countdown.textContent = "Today's the day!";
+      return;
+    }
+
+    const weeks = Math.floor(daysRemaining / 7);
+    const days = daysRemaining % 7;
+
+    if (weeks > 0) {
+      countdown.textContent =
+        `${weeks} week${weeks === 1 ? '' : 's'}, ${days} day${days === 1 ? '' : 's'} to go!`;
+    } else {
+      countdown.textContent =
+        `${days} day${days === 1 ? '' : 's'} to go!`;
+    }
+
+    return;
+  }
+
+  // More than 4 weeks away
+  const monthsRemaining =
+    (weddingDate.getFullYear() - now.getFullYear()) * 12 +
+    (weddingDate.getMonth() - now.getMonth());
+
+  countdown.textContent =
+    `${monthsRemaining} month${monthsRemaining === 1 ? '' : 's'} to go`;
 }
 
 updateCountdown();
-setInterval(updateCountdown, 60_000);
+setInterval(updateCountdown, 60 * 60 * 1000);
+
 
 const revealObserver = new IntersectionObserver(
   (entries) => {
@@ -83,27 +111,40 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-
 // PWA install button
 // Android/Chrome supports the native beforeinstallprompt event.
 // iOS Safari does not, so we show a friendly animated guide instead.
+
 let deferredInstallPrompt = null;
 
 const installStrip = document.getElementById('install-strip');
 const installButton = document.getElementById('install-button');
+const installDismiss = document.getElementById('install-dismiss');
 const iosInstallModal = document.getElementById('ios-install-modal');
 const iosInstallClose = document.getElementById('ios-install-close');
+
+const INSTALL_DISMISS_KEY = 'installDismissUntil';
 
 function isIosDevice() {
   return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
 }
 
 function isStandaloneApp() {
-  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  return (
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true
+  );
 }
 
 function showInstallStrip(label = 'Install app') {
   if (!installStrip || !installButton || isStandaloneApp()) return;
+
+  const hiddenUntil = Number(
+    localStorage.getItem(INSTALL_DISMISS_KEY) || 0
+  );
+
+  if (Date.now() < hiddenUntil) return;
+
   installButton.textContent = label;
   installStrip.hidden = false;
 }
@@ -115,19 +156,23 @@ function hideInstallStrip() {
 
 function openIosInstallGuide() {
   if (!iosInstallModal) return;
+
   iosInstallModal.hidden = false;
   iosInstallModal.setAttribute('aria-hidden', 'false');
 }
 
 function closeIosInstallGuide() {
   if (!iosInstallModal) return;
+
   iosInstallModal.hidden = true;
   iosInstallModal.setAttribute('aria-hidden', 'true');
 }
 
 window.addEventListener('beforeinstallprompt', (event) => {
   event.preventDefault();
+
   deferredInstallPrompt = event;
+
   showInstallStrip('Install app');
 });
 
@@ -138,10 +183,14 @@ window.addEventListener('appinstalled', () => {
 
 if (installButton) {
   installButton.addEventListener('click', async () => {
+
     if (deferredInstallPrompt) {
       deferredInstallPrompt.prompt();
+
       await deferredInstallPrompt.userChoice;
+
       deferredInstallPrompt = null;
+
       hideInstallStrip();
       return;
     }
@@ -152,22 +201,50 @@ if (installButton) {
   });
 }
 
+if (installDismiss) {
+  installDismiss.addEventListener('click', () => {
+
+    const oneHourFromNow =
+      Date.now() + (60 * 60 * 1000);
+
+    localStorage.setItem(
+      INSTALL_DISMISS_KEY,
+      oneHourFromNow
+    );
+
+    hideInstallStrip();
+  });
+}
+
 if (iosInstallClose) {
-  iosInstallClose.addEventListener('click', closeIosInstallGuide);
+  iosInstallClose.addEventListener(
+    'click',
+    closeIosInstallGuide
+  );
 }
 
 if (iosInstallModal) {
   iosInstallModal.addEventListener('click', (event) => {
-    if (event.target === iosInstallModal) closeIosInstallGuide();
+    if (event.target === iosInstallModal) {
+      closeIosInstallGuide();
+    }
   });
 }
 
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') closeIosInstallGuide();
+  if (event.key === 'Escape') {
+    closeIosInstallGuide();
+  }
 });
 
 window.addEventListener('load', () => {
-  if (isIosDevice() && !isStandaloneApp()) {
+
+  if (isStandaloneApp()) {
+    hideInstallStrip();
+    return;
+  }
+
+  if (isIosDevice()) {
     showInstallStrip('How to install');
   }
 });

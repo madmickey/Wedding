@@ -25,21 +25,19 @@
   <section id="welcome" class="hero section">
   <div class="hero-card reveal">
 
-    <h1>Liz + Michael's Wedding</h1>
+    <h1 class="no-divider">Liz + Michael's Wedding</h1>
 
-    <p class="hero-date">
+
+
+    <p class="eyebrow-raised hero-kicker">
       Saturday 3 October 2026
     </p>
 
-    <p class="eyebrow-raised hero-kicker">
-      2pm · Bondi Scenic Lounge
+    <p class="hero-date  eyebrow-raised hero-kicker">
+      2pm · Bondi Scenic Lounge, Bondi Surf Life Saving Club
     </p>
 
-    <p class="venue-line">
-      Bondi Surf Life Saving Club
-    </p>
-
-    <div id="countdown" class="countdown countdown-lower" aria-live="polite"></div>
+    
 
     <div class="hero-actions hero-actions-lower">
       <a class="button" href="rsvp.html">RSVP now</a>
@@ -47,6 +45,10 @@
     </div>
 
   </div>
+</section>
+
+ <section class="section">
+ 
 </section>
 
 <!--<section id="schedule" class="section reveal">
@@ -61,7 +63,10 @@
     </section>-->
     <section id="schedule" class="section reveal">
       <p class="eyebrow">The day</p><h2>Schedule</h2>
+	   
+	  
       <div class="timeline">
+	  <div><strong>How long?</strong><span><span id="countdown" class="" aria-live="polite"></span></div>
         <div><strong>2:00pm</strong><span>Arrival</span></div>
         <div><strong>2:30pm</strong><span>Ceremony</span></div>
         <div><strong>in between</strong><span>to be confirmed</span></div>
@@ -141,34 +146,34 @@
    
 	   </p></article>
 	   <article><h3>Michael</h3><p>
-<a href="https://wa.me/61412345678" class="contact-link" target="_blank">
+<a href="https://wa.me/0401358602" class="contact-link" target="_blank">
     <span class="icon">💬</span>
     <span>WhatsApp Michael</span>
 </a>
 
-<a href="mailto:wedding@example.com" class="contact-link">
+<a href="mailto:michaeljcornell@gmail.com" class="contact-link">
     <span class="icon">✉️</span>
     <span>Email Michael</span>
 </a>
 
-<a href="tel:+61412345678" class="contact-link">
+<a href="tel:+61401358602" class="contact-link">
     <span class="icon">📞</span>
     <span>Call Michael</span>
 </a>
 	  </article>
 	   
 	   <article><h3>Liz</h3><p>
-<a href="https://wa.me/61412345678" class="contact-link" target="_blank">
+<a href="https://wa.me/0424619499" class="contact-link" target="_blank">
     <span class="icon">💬</span>
     <span>WhatsApp Liz</span>
 </a>
 
-<a href="mailto:wedding@example.com" class="contact-link">
+<a href="mailto:newel833@gmail.com" class="contact-link">
     <span class="icon">✉️</span>
     <span>Email Liz</span>
 </a>
 
-<a href="tel:+61412345678" class="contact-link">
+<a href="tel:+61424619499" class="contact-link">
     <span class="icon">📞</span>
     <span>Call Liz</span>
 </a>
@@ -177,7 +182,7 @@
 	   </p></article>
     
     </section>
-   <section id="emergency" class="section reveal">
+   <section id="emergency" class="section reveal emergency">
     <p class="eyebrow">Need Help?</p>
     <h2>Important Contacts</h2>
 
@@ -227,36 +232,80 @@
             <p>Poisons Information Centre</p>
         </article>
 
-        <article>
-            <h3>⛈️ SES</h3>
-            <p>
-                <a href="tel:+61132500"><strong>+61 132 500</strong></a>
-            </p>
-            <p>Storm and flood assistance</p>
-        </article>
+    
 
     </div>
 </section>
   </main>
 
 
-  <div class="install-strip" id="install-strip" hidden>
-    <div>
-      <strong>Save this wedding site</strong>
-      <span>Install it to your home screen for quick offline access.</span>
-    </div>
-    <button class="install-button" id="install-button" type="button">Install app</button>
+<div class="install-strip" id="install-strip" hidden>
+  <div>
+    <strong>Add our wedding app</strong>
+    <span>
+      Get quick access to schedules, maps, accommodation and photo sharing.
+    </span>
   </div>
 
-  <div class="install-modal" id="ios-install-modal" hidden aria-hidden="true">
-    <div class="install-modal-card" role="dialog" aria-modal="true" aria-labelledby="ios-install-title">
-      <button class="modal-close" id="ios-install-close" type="button" aria-label="Close install instructions">×</button>
-      <p class="eyebrow">iPhone / iPad</p>
-      <h2 id="ios-install-title">Add to Home Screen</h2>
-      <p>On iOS, install from Safari using Share, then <strong>Add to Home Screen</strong>.</p>
-      <img class="install-gif" src="assets/images/ios-add-to-home.gif" alt="Animated guide showing how to add this wedding site to the iPhone home screen" />
-    </div>
+  <div class="install-actions">
+    <button
+      class="install-button"
+      id="install-button"
+      type="button">
+      Add to Home Screen
+    </button>
+
+    <button
+      class="install-dismiss"
+      id="install-dismiss"
+      type="button"
+      aria-label="Dismiss install prompt">
+      ×
+    </button>
   </div>
+</div>
+
+<div
+  class="install-modal"
+  id="ios-install-modal"
+  hidden
+  aria-hidden="true">
+
+  <div
+    class="install-modal-card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="ios-install-title">
+
+    <button
+      class="modal-close"
+      id="ios-install-close"
+      type="button"
+      aria-label="Close install instructions">
+      ×
+    </button>
+
+    <p class="eyebrow">iPhone & iPad</p>
+
+    <h2 id="ios-install-title">
+      Add to Home Screen
+    </h2>
+
+    <p>
+      Add our wedding app to your Home Screen for easy access before and during the day.
+    </p>
+
+    <p>
+      Tap <strong>Share</strong> in Safari, then select
+      <strong>Add to Home Screen</strong>.
+    </p>
+
+    <img
+      class="install-gif"
+      src="assets/images/ios-add-to-home.gif"
+      alt="How to add the wedding site to your iPhone home screen">
+  </div>
+</div>
 
   <footer><p>Liz & Michael · 3 October 2026</p></footer>
   <script src="js/app.js"></script>
