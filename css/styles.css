@@ -622,3 +622,26 @@ footer {
         transparent
     );
 }
+
+
+.hero-kicker {
+  margin-bottom: 1rem;
+  color: #9a6f5d;
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+}
+
+.hero-time {
+  margin-top: 0.75rem;
+  margin-bottom: 0.4rem;
+  color: var(--muted);
+}
+
+.countdown-lower {
+  margin-top: 2.5rem;
+  margin-bottom: 0;
+  font-size: 1.05rem;
+}
+
+.hero-actions-lower {
+  margin-top: 1.8rem;
+}
