@@ -51,18 +51,12 @@ const numAdults  = params.get("num_adults")  || localStorage.getItem("num_adults
 }
 
 greeting.innerHTML += `
-
-        <div class="card" style="margin-bottom:2rem;">
-            <p class="eyebrow">Wedding Details</p>
-            <p>
-                💍 <strong>Michael & Liz's Wedding</strong><br>
-                📅 Saturday 3 October 2026 · 2:00pm<br>
-                📍 Bondi Scenic Lounge @ Bondi Surf Life Saving Club
-            </p>
-            <p style="margin-top:1rem;">
-                Please confirm your attendance and update any guest details below.
-            </p>
-        </div>
+<section id="faqs" class="section reveal visible">
+      <p class="eyebrow">Wedding Details</p><h2>Liz + Michael's wedding</h2>
+      <div class="grid cards">
+        <article><p>Saturday 3 October 2026 · 2:00pm</p><p>The Scenic Lounge - Bondi Surf Life Saving Club</p><p>Please confirm your attendance and update any guest details below.</p></article>
+      </div>
+    </section>
     `;
 
   
