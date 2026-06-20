@@ -71,7 +71,7 @@ span {
 }
 .nav a:hover,
 .pill {
-    background: var(--ink) !important;
+    background: #7f5648 !important;
     color: #fff !important;
 }
 .nav-toggle {
@@ -733,4 +733,11 @@ background-size: min(260px, 60vw);
   margin-top: 2rem;
   padding-top: 1.5rem;
   border-top: 1px solid rgba(143, 111, 95, 0.15);
+}
+
+.nav-divider {
+    width: 1px;
+    height: 1.25rem;
+    background: var(--line);
+    margin: 0 0.4rem;
 }
