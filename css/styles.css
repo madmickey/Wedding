@@ -623,6 +623,14 @@ footer {
     font-size: 1.1rem;
 }
 
+.contact-link:visited,
+.contact-link:active,
+.contact-link:focus {
+    color: #8c6453;
+    background: var(--paper);
+    outline: none;
+}
+
 @media (max-width: 700px) {
     .contact-links {
         flex-direction: column;
