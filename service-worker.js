@@ -11,6 +11,9 @@ const ASSETS = [
   'js/app.js',
   'manifest.json',
 
+  'favicon.ico',
+  'favicon-96x96',
+
   'assets/icons/icon-192.png',
   'assets/icons/icon-512.png',
   'assets/icons/apple-touch-icon.png',
