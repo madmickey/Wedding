@@ -1,6 +1,84 @@
-const CACHE='liz-michael-wedding-v1';
-const ASSETS=['./','index.html','rsvp.html','photo-wall.html','accommodation.html','local.html','css/styles.css','js/app.js','manifest.json','assets/images/hero.svg',
-  'assets/images/ios-add-to-home.gif','assets/icons/icon-192.png','assets/icons/icon-512.png'];
-self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting()))});
-self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
-self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(fetch(e.request).then(r=>{const copy=r.clone();caches.open(CACHE).then(c=>c.put(e.request,copy));return r}).catch(()=>caches.match(e.request).then(r=>r||caches.match('index.html'))))});
+const CACHE = 'liz-michael-wedding-v1';
+
+const ASSETS = [
+  './',
+  'index.html',
+  'rsvp.html',
+  'photo-wall.html',
+  'local.html',
+
+  'css/styles.css',
+  'js/app.js',
+  'manifest.json',
+
+  'assets/icons/icon-192.png',
+  'assets/icons/icon-512.png',
+  'assets/icons/apple-touch-icon.png',
+
+  'assets/images/hero.svg',
+  'assets/images/install_sc.gif',
+  'assets/images/ios-add-to-home.gif',
+ // 'assets/images/liz-michael-crest.png',
+ // 'assets/images/liz-michael-crest-1.png',
+  'assets/images/liz-michael-crest.webp'
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches
+      .open(CACHE)
+      .then(cache => cache.addAll(ASSETS))
+      .then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches
+      .keys()
+      .then(keys =>
+        Promise.all(
+          keys
+            .filter(key => key !== CACHE)
+            .map(key => caches.delete(key))
+        )
+      )
+      .then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
+
+  const requestUrl = new URL(event.request.url);
+
+  // Do not cache external services: Google Maps, Tally, OneSignal, etc.
+  if (requestUrl.origin !== self.location.origin) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
+  event.respondWith(
+    fetch(event.request)
+      .then(response => {
+        const copy = response.clone();
+
+        caches.open(CACHE).then(cache => {
+          cache.put(event.request, copy);
+        });
+
+        return response;
+      })
+      .catch(() => {
+        return caches.match(event.request).then(cached => {
+          if (cached) return cached;
+
+          if (event.request.mode === 'navigate') {
+            return caches.match('index.html');
+          }
+
+          return caches.match('index.html');
+        });
+      })
+  );
+});

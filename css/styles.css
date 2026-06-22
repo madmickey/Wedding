@@ -749,3 +749,39 @@ background-size: min(260px, 60vw);
     background: var(--line);
     margin: 0 0.4rem;
 }
+
+.offline-banner {
+  display: none;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: #8c6453;
+  color: #fffaf6;
+  text-align: center;
+  font-weight: 700;
+}
+body.is-offline .offline-banner {
+  display: block;
+}
+
+.offline-map-fallback {
+  display: none;
+}
+
+body.is-offline .offline-map-fallback {
+  display: block;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--paper);
+}
+
+body.is-offline .map-card iframe {
+  display: none;
+}
+
+body.is-offline .map-actions {
+  opacity: 0.5;
+}
