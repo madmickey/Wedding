@@ -275,3 +275,22 @@ if (showInstallGuideButton) {
     openIosInstallGuide();
   });
 }
+
+function updateOnlineStatus() {
+  document.body.classList.toggle(
+    'is-offline',
+    !navigator.onLine
+  );
+}
+
+window.addEventListener(
+  'online',
+  updateOnlineStatus
+);
+
+window.addEventListener(
+  'offline',
+  updateOnlineStatus
+);
+
+updateOnlineStatus();

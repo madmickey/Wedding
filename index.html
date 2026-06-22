@@ -6,7 +6,14 @@
   <meta name="theme-color" content="#8f6f5f" />
   <title>Liz + Michael — Wedding</title>
   <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+
+<link
+  rel="icon"
+  type="image/png"
+  sizes="96x96"
+  href="/favicon-96x96.png">
   <link rel="stylesheet" href="css/styles.css" />
   <!--
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
@@ -67,6 +74,9 @@
         <div><strong>8:00pm</strong><span>Formal venue bump-out timing</span></div>
       </div>
     </section>-->
+	<div class="offline-banner">
+	  You’re offline — maps, RSVP forms and live links may not work.
+	</div>
     <section id="schedule" class="section reveal">
       <p class="eyebrow">The day</p><h2>Schedule</h2>
 	   
@@ -82,8 +92,8 @@
 
     <section id="venue" class="section split reveal">
       <div><p class="eyebrow">Venue</p><h2>The Scenic Lounge</h2><p>Bondi Surf Life Saving Club, next to the Bondi Pavilion </p></div>
-      <div class="info-card"><h3>Good to know</h3><p>Entrance to upstairs is opposite the kids play ground. Up the stairs around the side.
-      Note: it is not the North Bondi surf club or RSL!</p></div>
+      <div class="info-card"><h3>Good to know</h3><p>The venue is next to Bondi Pavilion (to the right when looking at it fom the beach) and the entrance, opposite the children's playground, up a flight of stairs.
+      NB: it is not the North Bondi surf club or North Bondi RSL!</p></div>
       <h2>Maps</h2>
 
 	  <div class="map-card">
@@ -94,7 +104,19 @@
 		  referrerpolicy="no-referrer-when-downgrade"
 		  src="https://www.google.com/maps?q=Bondi+Surf+Bathers+Life+Saving+Club+Bondi+NSW&output=embed">
 		</iframe>
+		<div class="offline-map-fallback">
+		  <h3>Offline Directions</h3>
 
+		  <p>
+			Bondi Surf Bathers Life Saving Club<br>
+			Queen Elizabeth Drive<br>
+			Bondi Beach NSW 2026
+		  </p>
+
+		  <p>
+			The venue is next to Bondi Pavilion (to the right when looking at it) and the entrance, opposite the children's playground, up a flight of stairs
+		  </p>
+		</div>
 		<div class="map-actions">
 		  <a
 			class="button"
