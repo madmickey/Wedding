@@ -104,10 +104,29 @@ document.querySelectorAll('.reveal').forEach((element) => {
 });
 
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('service-worker.js').catch(() => {
-      // The site still works if service worker registration fails.
+  navigator.serviceWorker.register('service-worker.js').then(reg => {
+    reg.addEventListener('updatefound', () => {
+      const newWorker = reg.installing;
+
+      newWorker.addEventListener('statechange', () => {
+        if (
+          newWorker.state === 'installed' &&
+          navigator.serviceWorker.controller
+        ) {
+          const updateNow = confirm(
+            'A new version of the wedding app is available. Update now?'
+          );
+
+          if (updateNow) {
+            newWorker.postMessage({ type: 'SKIP_WAITING' });
+          }
+        }
+      });
     });
+  });
+
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    window.location.reload();
   });
 }
 
@@ -277,20 +296,10 @@ if (showInstallGuideButton) {
 }
 
 function updateOnlineStatus() {
-  document.body.classList.toggle(
-    'is-offline',
-    !navigator.onLine
-  );
+  document.body.classList.toggle('is-offline', !navigator.onLine);
 }
 
-window.addEventListener(
-  'online',
-  updateOnlineStatus
-);
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
 
-window.addEventListener(
-  'offline',
-  updateOnlineStatus
-);
-
-updateOnlineStatus();
+window.addEventListener('load', updateOnlineStatus);
