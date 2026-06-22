@@ -248,3 +248,30 @@ window.addEventListener('load', () => {
     showInstallStrip('How to install');
   }
 });
+
+const showInstallGuideButton =
+  document.getElementById('show-install-guide');
+
+if (showInstallGuideButton) {
+  showInstallGuideButton.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    localStorage.removeItem('installDismissUntil');
+
+    if (isStandaloneApp()) {
+      return;
+    }
+
+    if (isIosDevice()) {
+      openIosInstallGuide();
+      return;
+    }
+
+    if (deferredInstallPrompt) {
+      showInstallStrip('Install app');
+      return;
+    }
+
+    openIosInstallGuide();
+  });
+}
