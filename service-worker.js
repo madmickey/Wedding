@@ -12,7 +12,7 @@ const ASSETS = [
   'manifest.json',
 
   'favicon.ico',
-  'favicon-96x96',
+  'favicon-96x96.png',
 
   'assets/icons/icon-192.png',
   'assets/icons/icon-512.png',
