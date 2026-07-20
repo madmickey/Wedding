@@ -303,3 +303,25 @@ window.addEventListener('online', updateOnlineStatus);
 window.addEventListener('offline', updateOnlineStatus);
 
 window.addEventListener('load', updateOnlineStatus);
+
+document.querySelectorAll(".copy-detail").forEach(button => {
+
+    button.addEventListener("click", async () => {
+
+        const target = document.getElementById(button.dataset.copy);
+
+        await navigator.clipboard.writeText(target.innerText);
+
+        const old = button.innerText;
+
+        button.innerText = "✓ Copied";
+
+        setTimeout(() => {
+
+            button.innerText = old;
+
+        },1500);
+
+    });
+
+});
