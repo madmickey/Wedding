@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#8f6f5f">
+  <title>Photo Wall — Liz & Michael</title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+
+<link
+  rel="icon"
+  type="image/png"
+  sizes="96x96"
+  href="/favicon-96x96.png">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    /* Photo wall (scoped with pw- prefix so it can't clash with styles.css) */
+
+    /* Tabs */
+    .pw-tabs {
+      display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+      margin: 8px 0 18px;
+    }
+    .pw-tab {
+      border: 1px solid #8f6f5f; background: transparent; color: #8f6f5f;
+      padding: 10px 20px; border-radius: 999px; font: inherit; font-weight: 600;
+      cursor: pointer; transition: background .2s, color .2s;
+    }
+    .pw-tab:hover { background: rgba(143,111,95,.12); }
+    .pw-tab[aria-selected="true"] { background: #8f6f5f; color: #fff; }
+    .pw-tab small { font-weight: 400; opacity: .85; margin-left: 4px; }
+
+    /* Thumbnail grid (fixed square tiles = no layout jumping while 100 photos lazy-load) */
+    .pw-wall {
+      display: grid; gap: 8px;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+    .pw-wall button {
+      display: block; width: 100%; aspect-ratio: 1; padding: 0; border: 0;
+      background: #e9e2dd; border-radius: 10px; overflow: hidden; cursor: zoom-in;
+    }
+    .pw-wall img {
+      display: block; width: 100%; height: 100%; object-fit: cover;
+      opacity: 0; transition: opacity .4s, transform .3s;
+    }
+    .pw-wall img.loaded { opacity: 1; }
+    .pw-wall button:hover img { transform: scale(1.06); }
+    .pw-status { text-align: center; opacity: .7; padding: 24px 0; }
+    .pw-album-link { text-align: center; margin-top: 16px; }
+
+    /* Full-screen viewer: swipe/scroll side to side */
+    .pw-lb {
+      position: fixed; inset: 0; background: #000; z-index: 1000;
+      display: none;
+    }
+    .pw-lb.open { display: block; }
+    .pw-track {
+      display: flex; height: 100%; overflow-x: auto; overflow-y: hidden;
+      scroll-snap-type: x mandatory; scrollbar-width: none;
+      overscroll-behavior: contain;
+    }
+    .pw-track::-webkit-scrollbar { display: none; }
+    .pw-slide {
+      flex: 0 0 100%; height: 100%; scroll-snap-align: center;
+      scroll-snap-stop: always; display: flex; align-items: center; justify-content: center;
+    }
+    .pw-slide img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+    .pw-back {
+      position: absolute; top: 10px; left: 10px; z-index: 2;
+      width: 44px; height: 44px; border: 0; border-radius: 50%;
+      background: rgba(0,0,0,.55); color: #fff; font-size: 1.6rem; line-height: 1;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+    .pw-back:hover { background: rgba(255,255,255,.2); }
+    .pw-count {
+      position: absolute; top: 20px; left: 0; right: 0; text-align: center;
+      color: #fff; font-size: .9rem; opacity: .8; pointer-events: none; z-index: 1;
+    }
+    .pw-nav {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+      width: 48px; height: 48px; border: 0; border-radius: 50%;
+      background: rgba(0,0,0,.45); color: #fff; font-size: 2rem; line-height: 1;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+    .pw-nav:hover { background: rgba(255,255,255,.2); }
+    .pw-nav.prev { left: 12px; } .pw-nav.next { right: 12px; }
+    @media (hover: none) { .pw-nav { display: none; } } /* touch: just swipe */
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">Liz & Michael</a>
+
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-navigation">
+      ☰
+    </button>
+
+    <nav id="site-navigation" class="nav">
+      <a href="index.html">Home</a>
+      <a href="rsvp.html">RSVP</a>
+      <a href="photos.html" class="pill">Photo Wall</a>
+      <a href="local.html">Local Tips</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="section page-hero reveal">
+      <p class="eyebrow">Photo Wall</p>
+      <h1>Photos from the day</h1>
+      <p class="lead">
+        A look back at our favourite moments. Tap any photo to see it bigger, then swipe side to side.
+      </p>
+    </section>
+
+    <section class="section reveal">
+      <!-- TABS: label text is free to change. data-panel must match a panel id below. -->
+      <div class="pw-tabs" role="tablist" aria-label="Photo galleries">
+        <button class="pw-tab" role="tab" type="button" data-panel="function" aria-selected="true">Function</button>
+        <button class="pw-tab" role="tab" type="button" data-panel="mainevent" aria-selected="false">Main Event</button>
+      </div>
+
+      <!-- Panel 1: first album (photos-ceremony.json) -->
+      <div class="pw-panel" id="function" role="tabpanel">
+        <div class="pw-status">Loading photos…</div>
+        <div class="pw-wall" data-src="photos-ceremony.json"></div>
+        <p class="pw-album-link">
+          <a href="https://photos.app.goo.gl/XyrTqm3JVjY4Riic9" target="_blank" rel="noopener">
+            View the full album on Google Photos
+          </a>
+        </p>
+      </div>
+
+      <!-- Panel 2: second album (photos-reception.json). Replace SECOND_ALBUM_LINK. -->
+      <div class="pw-panel" id="mainevent" role="tabpanel" hidden>
+        <div class="pw-status">Loading photos…</div>
+        <div class="pw-wall" data-src="photos-reception.json"></div>
+        <p class="pw-album-link">
+          <a href="https://photos.app.goo.gl/SECOND_ALBUM_LINK" target="_blank" rel="noopener">
+            View the full album on Google Photos
+          </a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Full-screen viewer -->
+  <div class="pw-lb" id="pwLb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <button class="pw-back" id="pwBack" type="button" aria-label="Back to gallery">←</button>
+    <div class="pw-count" id="pwCount"></div>
+    <button class="pw-nav prev" id="pwPrev" type="button" aria-label="Previous photo">‹</button>
+    <button class="pw-nav next" id="pwNext" type="button" aria-label="Next photo">›</button>
+    <div class="pw-track" id="pwTrack"></div>
+  </div>
+
+<div class="install-strip" id="install-strip" hidden>
+  <div>
+    <strong>Add our wedding app</strong>
+    <span>
+      Get quick access to schedules, maps, accommodation and photo sharing.
+    </span>
+  </div>
+
+  <div class="install-actions">
+    <button
+      class="install-button"
+      id="install-button"
+      type="button">
+      Add to Home Screen
+    </button>
+
+    <button
+      class="install-dismiss"
+      id="install-dismiss"
+      type="button"
+      aria-label="Dismiss install prompt">
+      ×
+    </button>
+  </div>
+</div>
+
+<div
+  class="install-modal"
+  id="ios-install-modal"
+  hidden
+  aria-hidden="true">
+
+  <div
+    class="install-modal-card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="ios-install-title">
+
+    <button
+      class="modal-close"
+      id="ios-install-close"
+      type="button"
+      aria-label="Close install instructions">
+      ×
+    </button>
+
+    <p class="eyebrow">iPhone & iPad</p>
+
+    <h2 id="ios-install-title">
+      Add to Home Screen
+    </h2>
+
+    <p>
+      Add our wedding app to your Home Screen for easy access before and during the day.
+    </p>
+
+    <p>
+      Tap <strong>Share</strong> in Safari, then select
+      <strong>Add to Home Screen</strong>.
+    </p>
+
+    <img
+      class="install-gif"
+      src="assets/images/ios-add-to-home.gif"
+      alt="How to add the wedding site to your iPhone home screen">
+  </div>
+</div>
+
+  <script>
+    (function () {
+      const THUMB = "w500-h500-c";  // square crop for the grid
+      const FULL = "w2000";         // size in the viewer
+      const sized = (u, s) => /=[wsh]\d|=s\d/.test(u) ? u : u + "=" + s;
+
+      const tabs = [...document.querySelectorAll(".pw-tab")];
+      const panels = [...document.querySelectorAll(".pw-panel")];
+      const loaded = {};   // panel id -> true once its JSON is fetched
+
+      // ---------- Tabs ----------
+      function selectTab(id, updateHash) {
+        if (!document.getElementById(id)) id = panels[0].id;
+        tabs.forEach(t => t.setAttribute("aria-selected", String(t.dataset.panel === id)));
+        panels.forEach(p => { p.hidden = p.id !== id; });
+        if (updateHash) history.replaceState(null, "", "#" + id);
+        loadPanel(document.getElementById(id));
+      }
+      tabs.forEach(t => t.addEventListener("click", () => selectTab(t.dataset.panel, true)));
+
+      // ---------- Load a gallery (only when its tab is first shown) ----------
+      function loadPanel(panel) {
+        if (loaded[panel.id]) return;
+        loaded[panel.id] = true;
+        const wall = panel.querySelector(".pw-wall");
+        const status = panel.querySelector(".pw-status");
+        const tab = tabs.find(t => t.dataset.panel === panel.id);
+
+        fetch(wall.dataset.src, { cache: "no-cache" })
+          .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+          .then(list => {
+            const photos = list.map(p => typeof p === "string" ? p : p.url).filter(Boolean);
+            if (!photos.length) { status.textContent = "No photos yet, check back soon."; return; }
+            status.remove();
+            tab.insertAdjacentHTML("beforeend", "<small>" + photos.length + "</small>");
+            render(wall, photos);
+          })
+          .catch(() => { status.textContent = "Photos will appear here soon."; });
+      }
+
+      function render(wall, photos) {
+        const frag = document.createDocumentFragment();
+        photos.forEach((url, i) => {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.setAttribute("aria-label", "Open photo " + (i + 1));
+          const img = new Image();
+          img.src = sized(url, THUMB);
+          img.alt = "";
+          img.loading = "lazy";
+          img.referrerPolicy = "no-referrer";
+          img.onload = () => img.classList.add("loaded");
+          img.onerror = () => b.remove();
+          b.appendChild(img);
+          b.addEventListener("click", () => openViewer(photos, i));
+          frag.appendChild(b);
+        });
+        wall.appendChild(frag);
+      }
+
+      // ---------- Viewer ----------
+      const lb = document.getElementById("pwLb");
+      const track = document.getElementById("pwTrack");
+      const count = document.getElementById("pwCount");
+      let total = 0;
+      let urls = [];
+
+      function loadSlide(i) {
+        const slide = track.children[i];
+        if (!slide || slide.firstChild) return;
+        const img = new Image();
+        img.src = sized(urls[i], FULL);
+        img.alt = "";
+        img.referrerPolicy = "no-referrer";
+        slide.appendChild(img);
+      }
+      function loadAround(i) { for (let k = i - 1; k <= i + 2; k++) loadSlide(k); }
+      function index() { return Math.round(track.scrollLeft / track.clientWidth); }
+      function updateCount() {
+        const i = Math.min(Math.max(index(), 0), total - 1);
+        count.textContent = (i + 1) + " / " + total;
+        loadAround(i);
+      }
+
+      function openViewer(photos, i) {
+        urls = photos;
+        total = photos.length;
+        track.innerHTML = "";
+        photos.forEach(() => {
+          const s = document.createElement("div");
+          s.className = "pw-slide";
+          track.appendChild(s);
+        });
+        lb.classList.add("open");
+        document.body.style.overflow = "hidden";
+        track.scrollLeft = i * track.clientWidth;
+        updateCount();
+        history.pushState({ pw: 1 }, "");   // phone back button closes the viewer
+      }
+      function closeUI() {
+        lb.classList.remove("open");
+        document.body.style.overflow = "";
+        track.innerHTML = "";
+      }
+      function isOpen() { return lb.classList.contains("open"); }
+      function goBack() { if (history.state && history.state.pw) history.back(); else closeUI(); }
+
+      let ticking = false;
+      track.addEventListener("scroll", () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => { updateCount(); ticking = false; });
+      }, { passive: true });
+
+      document.getElementById("pwBack").onclick = goBack;
+      document.getElementById("pwPrev").onclick = () => track.scrollBy({ left: -track.clientWidth, behavior: "smooth" });
+      document.getElementById("pwNext").onclick = () => track.scrollBy({ left: track.clientWidth, behavior: "smooth" });
+      window.addEventListener("popstate", () => { if (isOpen()) closeUI(); });
+      document.addEventListener("keydown", e => {
+        if (!isOpen()) return;
+        if (e.key === "Escape") goBack();
+        if (e.key === "ArrowLeft") track.scrollBy({ left: -track.clientWidth, behavior: "smooth" });
+        if (e.key === "ArrowRight") track.scrollBy({ left: track.clientWidth, behavior: "smooth" });
+      });
+
+      // Start on the tab in the URL (#mainevent) or the first one
+      selectTab(location.hash.slice(1) || panels[0].id, false);
+    })();
+  </script>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
