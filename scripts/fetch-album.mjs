@@ -1,20 +1,15 @@
 import { writeFileSync } from "node:fs";
 
 // name -> Google Photos share link. Each album is written to photos-<name>.json
-// (the name must match the data-src in photo-wall.html).
+// (the name must match the data-src in photos.html).
 const ALBUMS = {
-  ceremony: "https://photos.app.goo.gl/XyrTqm3JVjY4Riic9",
-  reception: "https://photos.app.goo.gl/SECOND_ALBUM_LINK", // replace with your second album link
+  top50: "https://photos.app.goo.gl/xiQcKVfM3T8EsQAC6",
+  reception: "https://photos.app.goo.gl/uduTW5yoTay2xiNr6",
 };
 
 let failed = false;
 
 for (const [name, link] of Object.entries(ALBUMS)) {
-  if (link.includes("SECOND_ALBUM_LINK")) {
-    console.log(`${name}: link not set yet, skipping`);
-    continue;
-  }
-
   try {
     const res = await fetch(link, {
       redirect: "follow",
