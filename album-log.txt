@@ -1,0 +1,2 @@
+ceremony: HTTP 200, found 302 photos
+reception: link not set yet, skipping
