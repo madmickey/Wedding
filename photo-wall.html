@@ -90,6 +90,19 @@
     .pw-nav:hover { background: rgba(255,255,255,.2); }
     .pw-nav.prev { left: 12px; } .pw-nav.next { right: 12px; }
     @media (hover: none) { .pw-nav { display: none; } } /* touch: just swipe */
+
+        /* Floating back-to-top button */
+    .pw-top {
+      position: fixed; right: 16px; bottom: 20px; z-index: 900;
+      width: 44px; height: 44px; border: 0; border-radius: 50%;
+      background: rgba(143,111,95,.9); color: #fff; font-size: 1.3rem; line-height: 1;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+      opacity: 0; transform: translateY(10px); pointer-events: none;
+      transition: opacity .25s, transform .25s;
+    }
+    .pw-top.show { opacity: 1; transform: none; pointer-events: auto; }
+    .pw-top:hover { background: #8f6f5f; }
   </style>
 </head>
 
@@ -178,7 +191,8 @@
       </div>
     </section>
   </main>
-
+  <!-- Floating back-to-top button -->
+  <button class="pw-top" id="pwTop" type="button" aria-label="Back to top">↑</button>
   <!-- Full-screen viewer -->
   <div class="pw-lb" id="pwLb" role="dialog" aria-modal="true" aria-label="Photo viewer">
     <button class="pw-back" id="pwBack" type="button" aria-label="Back to gallery">←</button>
