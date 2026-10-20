@@ -414,5 +414,15 @@
   </script>
 
   <script src="js/app.js"></script>
+    <script>
+    // Back-to-top button: appears once you've scrolled down a bit
+    (function () {
+      const btn = document.getElementById("pwTop");
+      const update = () => btn.classList.toggle("show", window.scrollY > 500);
+      window.addEventListener("scroll", update, { passive: true });
+      btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+      update();
+    })();
+  </script>
 </body>
 </html>
