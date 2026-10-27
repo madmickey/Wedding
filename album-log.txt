@@ -1,2 +1,2 @@
-top50: HTTP 200, found 45 photos
+top50: HTTP 200, found 77 photos
 reception: HTTP 200, found 218 photos
