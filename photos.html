@@ -19,39 +19,90 @@
 
   <style>
     /* Photo wall (scoped with pw- prefix so it can't clash with styles.css) */
-    .pw-wall { columns: 4 220px; column-gap: 10px; margin-top: 18px; }
+
+    /* Tabs */
+    .pw-tabs {
+      display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+      margin: 8px 0 18px;
+    }
+    .pw-tab {
+      border: 1px solid #8f6f5f; background: transparent; color: #8f6f5f;
+      padding: 10px 20px; border-radius: 999px; font: inherit; font-weight: 600;
+      cursor: pointer; transition: background .2s, color .2s;
+    }
+    .pw-tab:hover { background: rgba(143,111,95,.12); }
+    .pw-tab[aria-selected="true"] { background: #8f6f5f; color: #fff; }
+    .pw-tab small { font-weight: 400; opacity: .85; margin-left: 4px; }
+
+    /* Thumbnail grid (fixed square tiles = no layout jumping while 100 photos lazy-load) */
+    .pw-wall {
+      display: grid; gap: 8px;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
     .pw-wall button {
-      display: block; width: 100%; margin: 0 0 10px; padding: 0; border: 0;
-      background: #e9e2dd; border-radius: 10px; overflow: hidden;
-      cursor: zoom-in; break-inside: avoid;
+      display: block; width: 100%; aspect-ratio: 1; padding: 0; border: 0;
+      background: #e9e2dd; border-radius: 10px; overflow: hidden; cursor: zoom-in;
     }
     .pw-wall img {
-      display: block; width: 100%; height: auto;
+      display: block; width: 100%; height: 100%; object-fit: cover;
       opacity: 0; transition: opacity .4s, transform .3s;
     }
     .pw-wall img.loaded { opacity: 1; }
-    .pw-wall button:hover img { transform: scale(1.03); }
+    .pw-wall button:hover img { transform: scale(1.06); }
     .pw-status { text-align: center; opacity: .7; padding: 24px 0; }
-    .pw-album-link { text-align: center; margin-top: 14px; }
+    .pw-album-link { text-align: center; margin-top: 16px; }
 
+    /* Full-screen viewer: swipe/scroll side to side */
     .pw-lb {
-      position: fixed; inset: 0; background: rgba(0,0,0,.92);
-      display: none; align-items: center; justify-content: center; z-index: 1000;
+      position: fixed; inset: 0; background: #000; z-index: 1000;
+      display: none;
     }
-    .pw-lb.open { display: flex; }
-    .pw-lb img { max-width: 92vw; max-height: 88vh; object-fit: contain; }
-    .pw-lb button {
-      position: absolute; background: none; border: 0; color: #fff;
-      font-size: 2.5rem; cursor: pointer; padding: .3em .5em; opacity: .85;
+    .pw-lb.open { display: block; }
+    .pw-track {
+      display: flex; height: 100%; overflow-x: auto; overflow-y: hidden;
+      scroll-snap-type: x mandatory; scrollbar-width: none;
+      overscroll-behavior: contain;
     }
-    .pw-lb button:hover { opacity: 1; }
-    .pw-lb .pw-close { top: 8px; right: 12px; }
-    .pw-lb .pw-prev { left: 8px; top: 50%; transform: translateY(-50%); }
-    .pw-lb .pw-next { right: 8px; top: 50%; transform: translateY(-50%); }
-    .pw-lb .pw-count {
-      position: absolute; bottom: 12px; left: 0; right: 0;
-      text-align: center; color: #fff; font-size: .9rem; opacity: .7;
+    .pw-track::-webkit-scrollbar { display: none; }
+    .pw-slide {
+      flex: 0 0 100%; height: 100%; scroll-snap-align: center;
+      scroll-snap-stop: always; display: flex; align-items: center; justify-content: center;
     }
+    .pw-slide img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+    .pw-back {
+      position: absolute; top: 10px; left: 10px; z-index: 2;
+      width: 44px; height: 44px; border: 0; border-radius: 50%;
+      background: rgba(0,0,0,.55); color: #fff; font-size: 1.6rem; line-height: 1;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+    .pw-back:hover { background: rgba(255,255,255,.2); }
+    .pw-count {
+      position: absolute; top: 20px; left: 0; right: 0; text-align: center;
+      color: #fff; font-size: .9rem; opacity: .8; pointer-events: none; z-index: 1;
+    }
+    .pw-nav {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+      width: 48px; height: 48px; border: 0; border-radius: 50%;
+      background: rgba(0,0,0,.45); color: #fff; font-size: 2rem; line-height: 1;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+    .pw-nav:hover { background: rgba(255,255,255,.2); }
+    .pw-nav.prev { left: 12px; } .pw-nav.next { right: 12px; }
+    @media (hover: none) { .pw-nav { display: none; } } /* touch: just swipe */
+
+        /* Floating back-to-top button */
+    .pw-top {
+      position: fixed; right: 16px; bottom: 20px; z-index: 900;
+      width: 44px; height: 44px; border: 0; border-radius: 50%;
+      background: rgba(143,111,95,.9); color: #fff; font-size: 1.3rem; line-height: 1;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+      opacity: 0; transform: translateY(10px); pointer-events: none;
+      transition: opacity .25s, transform .25s;
+    }
+    .pw-top.show { opacity: 1; transform: none; pointer-events: auto; }
+    .pw-top:hover { background: #8f6f5f; }
   </style>
 </head>
 
@@ -76,43 +127,82 @@
       <p class="eyebrow">Photo Wall</p>
       <h1>Photos from the day</h1>
       <p class="lead">
-        A look back at our favourite moments. Tap any photo to see it bigger.
+        A look back at our favourite moments, and a place to share yours. Tap any photo to see it bigger, then swipe side to side.
+      </p>
+      <p>
+        Please don't post any photos on social media without the subjects' consent, especially the kids!
       </p>
     </section>
 
-    <!-- Gallery 1 -->
-    <section class="section reveal" id="gallery-ceremony">
-      <p class="eyebrow">Gallery</p>
-      <h2>Ceremony</h2>
-      <div class="pw-status">Loading photos…</div>
-      <div class="pw-wall" data-src="photos-ceremony.json"></div>
-      <p class="pw-album-link">
-        <a href="https://photos.app.goo.gl/XyrTqm3JVjY4Riic9" target="_blank" rel="noopener">
-          View the full album on Google Photos
-        </a>
-      </p>
-    </section>
+    <section class="section reveal">
+      <!-- TABS: label text is free to change. data-panel must match a panel id below. -->
+      <div class="pw-tabs" role="tablist" aria-label="Photo galleries">
+        <button class="pw-tab" role="tab" type="button" data-panel="top50" aria-selected="true">Highlights</button>
+        <button class="pw-tab" role="tab" type="button" data-panel="reception" aria-selected="false">Reception</button>
+        <button class="pw-tab" role="tab" type="button" data-panel="upload" aria-selected="false">Upload</button>
+      </div>
 
-    <!-- Gallery 2: replace the link below with your second album's share link -->
-    <section class="section reveal" id="gallery-reception">
-      <p class="eyebrow">Gallery</p>
-      <h2>Reception</h2>
-      <div class="pw-status">Loading photos…</div>
-      <div class="pw-wall" data-src="photos-reception.json"></div>
-      <p class="pw-album-link">
-        <a href="https://photos.app.goo.gl/SECOND_ALBUM_LINK" target="_blank" rel="noopener">
-          View the full album on Google Photos
-        </a>
-      </p>
+      <!-- Panel 1: Top 50 (photos-top50.json) -->
+      <div class="pw-panel" id="top50" role="tabpanel">
+        <div class="pw-status">Loading photos…</div>
+        <div class="pw-wall" data-src="photos-top50.json"></div>
+        <p class="pw-album-link">
+        
+        </p>
+      </div>
+
+      <!-- Panel 2: Reception (photos-reception.json) -->
+      <div class="pw-panel" id="reception" role="tabpanel" hidden>
+        <div class="pw-status">Loading photos…</div>
+        <div class="pw-wall" data-src="photos-reception.json"></div>
+        <p class="pw-album-link">
+       
+        </p>
+      </div>
+
+      <!-- Panel 3: Upload (Tally form loads only when this tab is opened) -->
+      <div class="pw-panel" id="upload" role="tabpanel" data-type="upload" hidden>
+        <p class="lead" style="text-align:center">
+          Upload your favourite photos from the day. Add a short caption if you like.
+        </p>
+
+        <iframe
+          id="photoTallyFrame"
+          width="100%"
+          height="1000"
+          frameborder="0"
+          title="Upload wedding photos"
+          style="border:none;">
+        </iframe>
+
+        <div class="grid cards">
+          <article>
+            <h3>📸 Upload a few favourites</h3>
+            <p>Pick your best shots rather than uploading hundreds at once.</p>
+          </article>
+
+          <article>
+            <h3>💬 Add a caption</h3>
+            <p>Tell us who is in the photo or what was happening.</p>
+          </article>
+
+          <article>
+            <h3>💛 Thank you</h3>
+            <p>We’ll collect the photos and save them after the wedding.</p>
+          </article>
+        </div>
+      </div>
     </section>
   </main>
-
+  <!-- Floating back-to-top button -->
+  <button class="pw-top" id="pwTop" type="button" aria-label="Back to top">↑</button>
+  <!-- Full-screen viewer -->
   <div class="pw-lb" id="pwLb" role="dialog" aria-modal="true" aria-label="Photo viewer">
-    <button class="pw-close" type="button" aria-label="Close">×</button>
-    <button class="pw-prev" type="button" aria-label="Previous photo">‹</button>
-    <img id="pwLbImg" alt="">
-    <button class="pw-next" type="button" aria-label="Next photo">›</button>
+    <button class="pw-back" id="pwBack" type="button" aria-label="Back to gallery">←</button>
     <div class="pw-count" id="pwCount"></div>
+    <button class="pw-nav prev" id="pwPrev" type="button" aria-label="Previous photo">‹</button>
+    <button class="pw-nav next" id="pwNext" type="button" aria-label="Next photo">›</button>
+    <div class="pw-track" id="pwTrack"></div>
   </div>
 
 <div class="install-strip" id="install-strip" hidden>
@@ -184,36 +274,56 @@
 </div>
 
   <script>
-    // ---- Galleries: every .pw-wall[data-src] loads its own JSON list of Google Photos URLs ----
     (function () {
-      const THUMB = "w800";
-      const FULL = "w2400";
+      const THUMB = "w500-h500-c";  // square crop for the grid
+      const FULL = "w2000";         // size in the viewer
       const sized = (u, s) => /=[wsh]\d|=s\d/.test(u) ? u : u + "=" + s;
 
-      const lb = document.getElementById("pwLb");
-      const lbImg = document.getElementById("pwLbImg");
-      const count = document.getElementById("pwCount");
-      lbImg.referrerPolicy = "no-referrer";
+      const tabs = [...document.querySelectorAll(".pw-tab")];
+      const panels = [...document.querySelectorAll(".pw-panel")];
+      const loaded = {};   // panel id -> true once its content is loaded
 
-      let active = [];   // photos of the gallery currently open in the viewer
-      let cur = 0;
+      // ---------- Tabs ----------
+      function selectTab(id, updateHash) {
+        if (!document.getElementById(id)) id = panels[0].id;
+        tabs.forEach(t => t.setAttribute("aria-selected", String(t.dataset.panel === id)));
+        panels.forEach(p => { p.hidden = p.id !== id; });
+        if (updateHash) history.replaceState(null, "", "#" + id);
+        loadPanel(document.getElementById(id));
+      }
+      tabs.forEach(t => t.addEventListener("click", () => selectTab(t.dataset.panel, true)));
 
-      document.querySelectorAll(".pw-wall[data-src]").forEach(initGallery);
+      // ---------- Load a panel (only when its tab is first shown) ----------
+      function loadPanel(panel) {
+        if (loaded[panel.id]) return;
+        loaded[panel.id] = true;
 
-      function initGallery(wall) {
-        const status = wall.previousElementSibling;
-        const hasStatus = status && status.classList.contains("pw-status");
-        const setStatus = t => { if (hasStatus) status.textContent = t; };
+        if (panel.dataset.type === "upload") {
+          const guestCode = localStorage.getItem("guest_code") || "";
+          document.getElementById("photoTallyFrame").src =
+            "https://tally.so/embed/pbZjaZ" +
+            "?alignLeft=1" +
+            "&hideTitle=1" +
+            "&transparentBackground=1" +
+            "&dynamicHeight=1" +
+            "&guest_code=" + encodeURIComponent(guestCode);
+          return;
+        }
+
+        const wall = panel.querySelector(".pw-wall");
+        const status = panel.querySelector(".pw-status");
+        const tab = tabs.find(t => t.dataset.panel === panel.id);
 
         fetch(wall.dataset.src, { cache: "no-cache" })
           .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
           .then(list => {
             const photos = list.map(p => typeof p === "string" ? p : p.url).filter(Boolean);
-            if (!photos.length) { setStatus("No photos yet, check back soon."); return; }
-            if (hasStatus) status.remove();
+            if (!photos.length) { status.textContent = "No photos yet, check back soon."; return; }
+            status.remove();
+            tab.insertAdjacentHTML("beforeend", "<small>" + photos.length + "</small>");
             render(wall, photos);
           })
-          .catch(() => setStatus("Photos will appear here soon."));
+          .catch(() => { status.textContent = "Photos will appear here soon."; });
       }
 
       function render(wall, photos) {
@@ -230,51 +340,92 @@
           img.onload = () => img.classList.add("loaded");
           img.onerror = () => b.remove();
           b.appendChild(img);
-          b.addEventListener("click", () => open(photos, i));
+          b.addEventListener("click", () => openViewer(photos, i));
           frag.appendChild(b);
         });
         wall.appendChild(frag);
       }
 
-      function show(i) {
-        cur = (i + active.length) % active.length;
-        lbImg.src = sized(active[cur], FULL);
-        count.textContent = (cur + 1) + " / " + active.length;
+      // ---------- Viewer ----------
+      const lb = document.getElementById("pwLb");
+      const track = document.getElementById("pwTrack");
+      const count = document.getElementById("pwCount");
+      let total = 0;
+      let urls = [];
+
+      function loadSlide(i) {
+        const slide = track.children[i];
+        if (!slide || slide.firstChild) return;
+        const img = new Image();
+        img.src = sized(urls[i], FULL);
+        img.alt = "";
+        img.referrerPolicy = "no-referrer";
+        slide.appendChild(img);
       }
-      function open(photos, i) {
-        active = photos;
-        show(i);
+      function loadAround(i) { for (let k = i - 1; k <= i + 2; k++) loadSlide(k); }
+      function index() { return Math.round(track.scrollLeft / track.clientWidth); }
+      function updateCount() {
+        const i = Math.min(Math.max(index(), 0), total - 1);
+        count.textContent = (i + 1) + " / " + total;
+        loadAround(i);
+      }
+
+      function openViewer(photos, i) {
+        urls = photos;
+        total = photos.length;
+        track.innerHTML = "";
+        photos.forEach(() => {
+          const s = document.createElement("div");
+          s.className = "pw-slide";
+          track.appendChild(s);
+        });
         lb.classList.add("open");
         document.body.style.overflow = "hidden";
+        track.scrollLeft = i * track.clientWidth;
+        updateCount();
+        history.pushState({ pw: 1 }, "");   // phone back button closes the viewer
       }
-      function close() {
+      function closeUI() {
         lb.classList.remove("open");
         document.body.style.overflow = "";
-        lbImg.src = "";
+        track.innerHTML = "";
       }
+      function isOpen() { return lb.classList.contains("open"); }
+      function goBack() { if (history.state && history.state.pw) history.back(); else closeUI(); }
 
-      lb.querySelector(".pw-close").onclick = close;
-      lb.querySelector(".pw-prev").onclick = () => show(cur - 1);
-      lb.querySelector(".pw-next").onclick = () => show(cur + 1);
-      lb.addEventListener("click", e => { if (e.target === lb) close(); });
+      let ticking = false;
+      track.addEventListener("scroll", () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => { updateCount(); ticking = false; });
+      }, { passive: true });
+
+      document.getElementById("pwBack").onclick = goBack;
+      document.getElementById("pwPrev").onclick = () => track.scrollBy({ left: -track.clientWidth, behavior: "smooth" });
+      document.getElementById("pwNext").onclick = () => track.scrollBy({ left: track.clientWidth, behavior: "smooth" });
+      window.addEventListener("popstate", () => { if (isOpen()) closeUI(); });
       document.addEventListener("keydown", e => {
-        if (!lb.classList.contains("open")) return;
-        if (e.key === "Escape") close();
-        if (e.key === "ArrowLeft") show(cur - 1);
-        if (e.key === "ArrowRight") show(cur + 1);
+        if (!isOpen()) return;
+        if (e.key === "Escape") goBack();
+        if (e.key === "ArrowLeft") track.scrollBy({ left: -track.clientWidth, behavior: "smooth" });
+        if (e.key === "ArrowRight") track.scrollBy({ left: track.clientWidth, behavior: "smooth" });
       });
 
-      let x0 = null;
-      lb.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
-      lb.addEventListener("touchend", e => {
-        if (x0 === null) return;
-        const dx = e.changedTouches[0].clientX - x0;
-        if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1));
-        x0 = null;
-      }, { passive: true });
+      // Start on the tab in the URL (#reception, #upload) or the first one
+      selectTab(location.hash.slice(1) || panels[0].id, false);
     })();
   </script>
 
   <script src="js/app.js"></script>
+    <script>
+    // Back-to-top button: appears once you've scrolled down a bit
+    (function () {
+      const btn = document.getElementById("pwTop");
+      const update = () => btn.classList.toggle("show", window.scrollY > 500);
+      window.addEventListener("scroll", update, { passive: true });
+      btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+      update();
+    })();
+  </script>
 </body>
 </html>
