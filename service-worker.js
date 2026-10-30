@@ -1,4 +1,4 @@
-const CACHE = 'liz-michael-wedding-v2';
+const CACHE = 'liz-michael-wedding-v3';
 
 const ASSETS = [
   './',
